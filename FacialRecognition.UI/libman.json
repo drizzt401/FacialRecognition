@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "font-awesome@5.15.3",
+      "destination": "wwwroot/css/font-awesome/",
+      "files": [
+        "css/all.min.css",
+        "css/fontawesome.min.css"
+      ]
+    },
+    {
+      "library": "select2@4.0.13",
+      "destination": "wwwroot/css/select2/"
+    }
+  ]
+}
