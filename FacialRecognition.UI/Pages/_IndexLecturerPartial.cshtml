@@ -8,8 +8,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="main-header">
-            <h4>Courses</h4>
-            <a class="ml-3 text-dark" data-toggle="modal" data-target="#exampleModalCenter"> <i class="text-dark icofont icofont-plus"></i>Add Course</a>
+            <h4>Assigned Courses</h4>
         </div>
     </div>
     <div class="row">
@@ -22,12 +21,26 @@
                                 <tr class="text-uppercase">
                                     <th>Course Code</th>
                                     <th>Course Title</th>
+                                    <th>
+                                        <button class="btn btn-outline-success" type="button" data-toggle="modal" data-target="#exampleModalCenter"> <i class="icofont icofont-plus"></i>Add Course</button>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var course in Model.Input.Courses)
                                 {
-
+                                <tr class="text-body">
+                                    <td>@course.CourseCode</td>
+                                    <td>@course.CourseTitle</td>
+                                    <td>
+                                        <!-- Call to action buttons -->
+                                        <ul class="list-inline m-0">
+                                            <li class="list-inline-item">
+                                                <button asp-page-handler="RemoveCourse" name="CourseCode" value="@course.CourseCode" class="btn btn-outline-danger btn-sm rounded-0" type="submit" data-toggle="tooltip" data-placement="top" title="Remove Course"><i class="icofont icofont-trash"></i> Remove</button>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
@@ -46,7 +59,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <select multiple asp-for="Input.Courses" asp-items="Model.Input.CourseOptions" class="js-example-tags form-control" style="width:100px">
+                    <select multiple asp-for="Input.CourseOptions" name="CourseOptions" asp-items="Model.Input.CourseOptions" class="js-example-tags form-control">
                     </select>
 
                     <div class="js-example-tags-container"></div>

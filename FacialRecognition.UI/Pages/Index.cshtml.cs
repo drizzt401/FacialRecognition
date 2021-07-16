@@ -52,13 +52,25 @@ namespace FacialRecognition.UI.Pages
 
         }
 
-        public IActionResult OnPostAddCourse()
+        public async Task<IActionResult> OnPostAddCourse(List<string> CourseOptions)
         {
-            foreach(var course in Input.CourseOptions)
+            List<Course> selectedCourses = new List<Course>();
+            AppUser user = userManager.GetUserAsync(User).Result;
+            foreach(var selectedCourse in CourseOptions)
             {
-
+                var course = facialRecognitionService.GetCourses().Where(c => c.CourseCode == selectedCourse).SingleOrDefault();
+                selectedCourses.Add(course);
             }
-            return LocalRedirect("/Index");
+            await facialRecognitionService.AddLecturerCourse(selectedCourses, user);
+            return Redirect("/Index");
+        }
+
+        public async Task<IActionResult> OnPostRemoveCourse(string courseCode)
+        {
+            var course = facialRecognitionService.GetCourses().Where(c => c.CourseCode == courseCode).SingleOrDefault();
+            AppUser user = userManager.GetUserAsync(User).Result;
+            await facialRecognitionService.RemoveLecturerCourse(course, user);
+            return Redirect("/Index");
         }
     }
 }

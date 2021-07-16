@@ -13,5 +13,7 @@ namespace FacialRecognition.Data.Services
         List<Student> GetStudents();
         Task<bool> AddLecturer(Lecturer lecturer);
         Task<bool> AddStudent(Student student);
+        Task<bool> AddLecturerCourse(List<Course> courses, AppUser user);
+        Task<bool> RemoveLecturerCourse(Course course, AppUser user);
     }
 }

@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <!-- Favicon icon -->
-    <link rel="shortcut icon" href="~/assets/images/favicon.png" type="image/x-icon">
-    <link rel="icon" href="~/assets/images/favicon.ico" type="image/x-icon">
+    @*<link rel="shortcut icon" href="~/assets/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="~/assets/images/favicon.ico" type="image/x-icon">*@
 
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500,700" rel="stylesheet">
@@ -46,7 +46,7 @@
     <div class="wrapper">
 
         <header class="main-header-top hidden-print">
-            <a href="index.html" class="logo"><img class="img-fluid able-logo" src="~/assets/images/logo.png" alt="Theme-logo"></a>
+            <a href="#" class="logo"><img class="img-fluid able-logo" src="" ></a>
             <nav class="navbar navbar-static-top">
                 <!-- Sidebar toggle button-->
                 <a href="#!" data-toggle="offcanvas" class="sidebar-toggle"></a>
@@ -66,11 +66,11 @@
                 <ul class="sidebar-menu">
                     <li class="nav-level">--- Dashboard</li>
                     <li class="active treeview">
-                        <a class="waves-effect waves-dark" href="index.html">
-                            <i class="icon-speedometer"></i><span> Courses</span>
+                        <a class="waves-effect waves-dark" href="#">
+                            <i class="icon-book-open"></i><span> Courses</span>
                         </a>
                     </li>
-                    <li class="nav-level">--- Components</li>
+                    @*<li class="nav-level">--- Components</li>
                     <li class="treeview">
                         <a class="waves-effect waves-dark" href="#!"><i class="icon-briefcase"></i><span> UI Elements</span><i class="icon-arrow-down"></i></a>
                         <ul class="treeview-menu">
@@ -184,7 +184,7 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
+                    </li>*@
                 </ul>
             </section>
         </aside>
@@ -245,7 +245,7 @@
                 $(".js-example-tags").select2({
                     tags: true,
                     placeholder: "Select a Course",
-                    width: 570
+                    width: "570px"
                 }).on('change', function () {
                     var $selected = $(this).find('option:selected');
                     var $container = $(this).siblings('.js-example-tags-container');
