@@ -3,10 +3,10 @@ C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.Data\bin\Debug\netc
 C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.Data\bin\Debug\netcoreapp3.1\FacialRecognition.Data.runtimeconfig.dev.json
 C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.Data\bin\Debug\netcoreapp3.1\FacialRecognition.Data.dll
 C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.Data\bin\Debug\netcoreapp3.1\FacialRecognition.Data.pdb
+C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.Data\obj\Debug\netcoreapp3.1\FacialRecognition.Data.csprojAssemblyReference.cache
 C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.Data\obj\Debug\netcoreapp3.1\FacialRecognition.Data.AssemblyInfoInputs.cache
 C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.Data\obj\Debug\netcoreapp3.1\FacialRecognition.Data.AssemblyInfo.cs
 C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.Data\obj\Debug\netcoreapp3.1\FacialRecognition.Data.csproj.CoreCompileInputs.cache
 C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.Data\obj\Debug\netcoreapp3.1\FacialRecognition.Data.dll
 C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.Data\obj\Debug\netcoreapp3.1\FacialRecognition.Data.pdb
 C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.Data\obj\Debug\netcoreapp3.1\FacialRecognition.Data.genruntimeconfig.cache
-C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.Data\obj\Debug\netcoreapp3.1\FacialRecognition.Data.csprojAssemblyReference.cache

@@ -62,7 +62,7 @@ namespace FacialRecognition.UI.Pages
                 selectedCourses.Add(course);
             }
             await facialRecognitionService.AddLecturerCourse(selectedCourses, user);
-            return Redirect("/Index");
+            return RedirectToPage();
         }
 
         public async Task<IActionResult> OnPostRemoveCourse(string courseCode)
@@ -70,7 +70,7 @@ namespace FacialRecognition.UI.Pages
             var course = facialRecognitionService.GetCourses().Where(c => c.CourseCode == courseCode).SingleOrDefault();
             AppUser user = userManager.GetUserAsync(User).Result;
             await facialRecognitionService.RemoveLecturerCourse(course, user);
-            return Redirect("/Index");
+            return RedirectToPage();
         }
     }
 }

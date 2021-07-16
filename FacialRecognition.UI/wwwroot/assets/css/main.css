@@ -119,7 +119,7 @@ ul {
   vertical-align: middle; }
 
 .card-header {
-  padding: 20px;
+  padding: 15px;
   background-color: transparent;
   color: #757575;
   border-bottom: none; }
@@ -6267,7 +6267,26 @@ svg#sun {
 .select2-selection__choice {
     display: none;
 }
+.collapsible-link {
+    width: 100%;
+    position: relative;
+    text-align: left;
+}
 
+    .collapsible-link::before {
+        content: '\f107';
+        position: absolute;
+        top: 50%;
+        right: 0.8rem;
+        transform: translateY(-50%);
+        display: block;
+        font-family: 'FontAwesome';
+        font-size: 1.1rem;
+    }
+
+    .collapsible-link[aria-expanded='true']::before {
+        content: '\f106';
+    }
 
 /* color css Ends */
 

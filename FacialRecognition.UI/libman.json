@@ -13,6 +13,18 @@
     {
       "library": "select2@4.0.13",
       "destination": "wwwroot/css/select2/"
+    },
+    {
+      "library": "datatables.net-bs5@1.10.25",
+      "destination": "wwwroot/lib/datatables.net-bs5/"
+    },
+    {
+      "library": "datatables.net@2.1.1",
+      "destination": "wwwroot/lib/datatables.net/"
+    },
+    {
+      "library": "twitter-bootstrap@5.0.2",
+      "destination": "wwwroot/lib/twitter-bootstrap/"
     }
   ]
 }
