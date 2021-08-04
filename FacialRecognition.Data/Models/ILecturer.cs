@@ -6,5 +6,6 @@ namespace FacialRecognition.Data.Models
     {
         ICollection<Course> Courses { get; set; }
         string StaffID { get; set; }
+        public Department Department { get; set; }
     }
 }

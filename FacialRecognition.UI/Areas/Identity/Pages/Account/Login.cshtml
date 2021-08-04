@@ -60,9 +60,6 @@
                     <div class="col-sm-12">
                         <div class="login-card card-block">
                             <form id="account" method="post" class="md-float-material">
-                                <div class="text-center">
-                                    <img src="~/assets/images/logo-black.png" alt="logo">
-                                </div>
                                 <h3 class="text-center txt-primary">
                                     Sign In to your account
                                 </h3>
@@ -82,7 +79,7 @@
                                     <div class="col-sm-6 col-xs-12">
                                         <div class="rkmd-checkbox checkbox-rotate checkbox-ripple m-b-25">
                                             <label class="input-checkbox checkbox-primary">
-                                                <input asp-for="Input.RememberMe" type="checkbox" id="checkbox">
+                                                <input asp-for="Input.RememberMe" type="checkbox" id="checkbox" value="false">
                                                 <span class="checkbox"></span>
                                             </label>
                                             <div class="captions"> @Html.DisplayNameFor(m => m.Input.RememberMe)</div>

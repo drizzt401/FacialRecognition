@@ -23,7 +23,7 @@ namespace FacialRecognition.Data.Extensions
                 // Default User settings.
                 options.User.AllowedUserNameCharacters =
                         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/";
-                options.User.RequireUniqueEmail = true;
+                options.User.RequireUniqueEmail = false;
 
             });
             return services;

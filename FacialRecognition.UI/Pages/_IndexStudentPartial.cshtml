@@ -1,5 +1,94 @@
-﻿
+﻿@using FacialRecognition.Data.Services
+@using FacialRecognition.Data.Models
+@model IndexModel
+@inject IFacialRecognitionService FacialRecognitionService
 @{
-   
 }
-<h1>Student</h1>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="main-header">
+            <h6>ASSIGNED COURSES</h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card">
+                <div class="card-block">
+                    <div class="table-responsive">
+                        <table class="table m-b-0 photo-table">
+                            <thead>
+                                <tr class="text-uppercase">
+                                    <th>Course Code</th>
+                                    <th>Course Title</th>
+                                    <th>
+                                        <button class="btn btn-sm btn-outline-success" type="button" data-toggle="modal" data-target="#exampleModalCenter"> <i class="icofont icofont-plus"></i>Register Course</button>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var course in Model.Input.Courses)
+                                {
+                                    <tr class="text-body">
+                                        <td>@course.CourseCode</td>
+                                        <td>@course.CourseTitle</td>
+                                        <td>
+                                            <!-- Call to action buttons -->
+                                            <ul class="list-inline m-0">
+                                                <li class="list-inline-item">
+                                                    <button asp-page-handler="RemoveCourse" name="CourseCode" value="@course.CourseCode" class="btn btn-outline-danger btn-sm rounded-0" type="submit"><i class="icofont icofont-trash"></i> Remove</button>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title col-md-9" id="exampleModalLongTitle">Register Course</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row py-4">
+                        <div class="mx-auto">
+
+                            <!-- Upload image input-->
+                            <div class="d-flex">
+                                <label for="file" class="col-md-2 col-form-label form-control-label">Picture</label>
+                                <div class="col-md-9">
+                                    <label for="file" class="custom-file" id="upload-label">
+                                        <input type="file" id="file" class="custom-file-input">
+                                        <span class="custom-file-control"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Uploaded image area-->
+                            <p class="col-md-12 font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
+                            <div class="image-area mt-4"><img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+
+                        </div>
+                    </div>
+                    <select multiple asp-for="Input.CourseOptions" name="CourseOptions" asp-items="Model.Input.CourseOptions" class="js-example-tags form-control">
+                    </select>
+
+                    <div class="js-example-tags-container"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button asp-page-handler="AddCourse" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

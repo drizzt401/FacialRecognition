@@ -12,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace FacialRecognition.UI
 {
@@ -31,15 +33,10 @@ namespace FacialRecognition.UI
                 
                 options.Conventions.AuthorizePage("/Index");
             });
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.RegisterDataServices(Configuration);
             services.AddScoped<IFacialRecognitionService, FacialRecognitionService>();
-            services.AddTransient<IEmailSender, Services.EmailSender>(e =>
-            new EmailSender(Configuration["EmailSettings:host"],
-            Configuration.GetValue<int>("EmailSettings:port"),
-            Configuration.GetValue<bool>("EmailSettings:enableSSL"),
-            Configuration["EmailSettings:UserName"],
-            Configuration["EmailSettings:Password"]));
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings

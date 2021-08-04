@@ -16,19 +16,24 @@ namespace FacialRecognition.Data.Services
         {
             _context = context;
         }
+        public List<Course> GetCourses(string DepartmentID)
+        {
+            return _context.Courses.Include(c => c.Department).Where(c => c.Department.DepartmentID == DepartmentID).ToList();
+        }
+
         public List<Course> GetCourses()
         {
             return _context.Courses.ToList();
         }
-
-        public List<Student> GetStudents()
+        public List<Student> GetCourseStudents(Course selectedCourse)
         {
-            return _context.Students.Include("Courses").ToList();
+            var course = _context.Courses.Include(c => c.Students).ThenInclude(s => s.Department).Single(c => c.CourseCode == selectedCourse.CourseCode);
+            return course.Students.ToList();
         }
 
         public List<Lecturer> GetLecturers()
         {
-            return _context.Lecturers.Include("Courses").ToList();
+            return _context.Lecturers.Include(l => l.Department).ToList();
         }
 
         public List<Course> GetCoursesByLecturer(string StaffID)
@@ -105,5 +110,33 @@ namespace FacialRecognition.Data.Services
             }
         }
 
+        public List<Department> GetDepartments()
+        {
+            return _context.Department.ToList();
+        }
+
+        public List<Student> GetStudents()
+        {
+            return _context.Students.Include(s => s.Department).ToList();
+        }
+
+        public async Task<bool> AddStudentCourse(List<Course> courses, AppUser user)
+        {
+            try
+            {
+                foreach (Course selectedCourse in courses)
+                {
+                    var course = _context.Courses.Include(c => c.Students).Single(c => c.CourseCode == selectedCourse.CourseCode);
+                    var student = _context.Students.Single(s => s.RegistrationNumber == user.Id);
+                    course.Students.Add(student);
+                }
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

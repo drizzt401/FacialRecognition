@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace FacialRecognition.UI.Pages
 {
@@ -21,7 +23,8 @@ namespace FacialRecognition.UI.Pages
             facialRecognitionService = _facialRecognitionService;
             userManager = _userManager;
         }
-        public List<Course> Courses { get; set; } = new List<Course>();
+        [BindProperty(SupportsGet =true)]
+        public List<Student> Students { get; set; }
         public List<SelectListItem> CourseOptions { get; set; }
         public void OnGet()
         {
@@ -34,7 +37,25 @@ namespace FacialRecognition.UI.Pages
 
         public async Task<IActionResult> OnGetGetCourseStudents(string courseCode)
         {
-            return RedirectToPage();
+            Course course = facialRecognitionService.GetCourses().Where(c => c.CourseCode == courseCode).SingleOrDefault();
+            var students = facialRecognitionService.GetCourseStudents(course);
+            List<Datum> data = new List<Datum>();
+            AjaxResponse response = new AjaxResponse();
+            foreach(Student student in students)
+            {
+                data.Add(new Datum
+                {
+                    FirstName = student.FirstName,
+                    LastName = student.LastName,
+                    RegNo = student.RegistrationNumber,
+                    Department = student.Department.Name
+                });
+            }
+
+           var str = JsonConvert.SerializeObject(data);
+            var res = JsonConvert.DeserializeObject<Datum[]>(str);
+            response.data = res;
+            return  new JsonResult(response.data); 
         }
     }
 }

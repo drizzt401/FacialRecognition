@@ -22,6 +22,13 @@ namespace FacialRecognition.Data.Data
                 context.Courses.Add(new Course { CourseCode = "CSC525", CourseTitle = "Introduction To Artificial Intelligence" });
             }
 
+            if (!context.Department.Any())
+            {
+                context.Department.Add(new Department { DepartmentID = "CO", Name = "Computer Science" });
+                context.Department.Add(new Department { DepartmentID = "MA", Name = "Mathematics" });
+                context.Department.Add(new Department { DepartmentID = "STA", Name = "Statistics" });
+            }
+
             context.SaveChanges();
         }
 

@@ -16,52 +16,84 @@ namespace FacialRecognition.UI.Pages
         private readonly IFacialRecognitionService facialRecognitionService;
         private readonly SignInManager<AppUser> signInManager;
         private readonly UserManager<AppUser> userManager;
+        private Lecturer lecturer;
+        private Student student;
+        private Department department;
         public IndexModel(IFacialRecognitionService _facialRecognitionService, UserManager<AppUser> _userManager)
         {
             facialRecognitionService = _facialRecognitionService;
             userManager = _userManager;
         }
 
+        //public string imageData { get; set; }
+
         [BindProperty]
         public InputModel Input { get; set; } = new InputModel();
+
+
         public class InputModel
         {
             public List<Course> Courses { get; set; } = new List<Course>();
             public List<Student> Students { get; set; } = new List<Student>();
-
-
             public List<SelectListItem> CourseOptions { get; set; }
         }
-        public void OnGet()
+        
+        public async Task OnGet()
         {
+
+            var user = await userManager.GetUserAsync(User);
             if (User.IsInRole("Lecturer"))
             {
-                var user = userManager.GetUserAsync(User);
-                 Input.Courses= facialRecognitionService.GetCoursesByLecturer(user.Result.Id);
+                lecturer = facialRecognitionService.GetLecturers().Select(l => l).Where(l => l.StaffID == user.Id).FirstOrDefault();
+                department = lecturer.Department;
+                Input.Courses= facialRecognitionService.GetCoursesByLecturer(user.Id);
+
+                Input.CourseOptions = facialRecognitionService.GetCourses(department.DepartmentID).Select(a => new SelectListItem
+                {
+                    Value = a.CourseCode.ToString(),
+                    Text = a.CourseTitle
+                }).ToList();
             }
             if (User.IsInRole("Student"))
             {
-                var user = userManager.GetUserAsync(User);
-                Input.Courses = facialRecognitionService.GetCoursesByStudent(user.Result.Id);
+                student = facialRecognitionService.GetStudents().Where(s => s.RegistrationNumber == user.Id).FirstOrDefault();
+                department = student.Department;
+                Input.Courses = facialRecognitionService.GetCoursesByStudent(user.Id);
+               // var imgPath = student.StudentImage;
+               // imageData = @"data:image / jpeg; base64," + Convert.ToBase64String(imgPath);
+                Input.CourseOptions = facialRecognitionService.GetCourses().Select(a => new SelectListItem
+                {
+                    Value = a.CourseCode.ToString(),
+                    Text = a.CourseTitle
+                }).ToList();
             }
 
-            Input.CourseOptions = facialRecognitionService.GetCourses().Select(a => new SelectListItem {
-                Value = a.CourseCode.ToString(),
-                Text= a.CourseTitle
-            }).ToList();
 
         }
 
         public async Task<IActionResult> OnPostAddCourse(List<string> CourseOptions)
         {
+
             List<Course> selectedCourses = new List<Course>();
             AppUser user = userManager.GetUserAsync(User).Result;
-            foreach(var selectedCourse in CourseOptions)
+            if (User.IsInRole("Lecturer"))
             {
-                var course = facialRecognitionService.GetCourses().Where(c => c.CourseCode == selectedCourse).SingleOrDefault();
-                selectedCourses.Add(course);
+                foreach (var selectedCourse in CourseOptions)
+                {
+                    var course = facialRecognitionService.GetCourses().Where(c => c.CourseCode == selectedCourse).SingleOrDefault();
+                    selectedCourses.Add(course);
+                    await facialRecognitionService.AddLecturerCourse(selectedCourses, user);
+                }
             }
-            await facialRecognitionService.AddLecturerCourse(selectedCourses, user);
+            if (User.IsInRole("Student"))
+            {
+                foreach (var selectedCourse in CourseOptions)
+                {
+                    var course = facialRecognitionService.GetCourses().Where(c => c.CourseCode == selectedCourse).SingleOrDefault();
+                    selectedCourses.Add(course);
+                    await facialRecognitionService.AddStudentCourse(selectedCourses, user);
+                }
+            }
             return RedirectToPage();
         }
 

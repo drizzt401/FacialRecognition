@@ -449,3 +449,5 @@ C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.UI\obj\Debug\net5.0
 C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.UI\obj\Debug\net5.0\ref\FacialRecognition.UI.dll
 C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.UI\obj\Debug\net5.0\FacialRecognition.UI.pdb
 C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.UI\obj\Debug\net5.0\FacialRecognition.UI.genruntimeconfig.cache
+C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.UI\bin\Debug\net5.0\Antlr3.Runtime.dll
+C:\Users\HP\source\repos\FacialRecognition\FacialRecognition.UI\bin\Debug\net5.0\WebGrease.dll

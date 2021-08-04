@@ -128,14 +128,35 @@ namespace FacialRecognition.Data.Migrations
                     b.Property<string>("CourseTitle")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DepartmentID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("CourseCode");
 
+                    b.HasIndex("DepartmentID");
+
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("FacialRecognition.Data.Models.Department", b =>
+                {
+                    b.Property<string>("DepartmentID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DepartmentID");
+
+                    b.ToTable("Department");
                 });
 
             modelBuilder.Entity("FacialRecognition.Data.Models.Lecturer", b =>
                 {
                     b.Property<string>("StaffID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DepartmentID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
@@ -146,6 +167,8 @@ namespace FacialRecognition.Data.Migrations
 
                     b.HasKey("StaffID");
 
+                    b.HasIndex("DepartmentID");
+
                     b.ToTable("Lecturers");
                 });
 
@@ -154,13 +177,21 @@ namespace FacialRecognition.Data.Migrations
                     b.Property<string>("RegistrationNumber")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("DepartmentID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("StudentImage")
+                        .HasColumnType("varbinary(max)");
+
                     b.HasKey("RegistrationNumber");
+
+                    b.HasIndex("DepartmentID");
 
                     b.ToTable("Students");
                 });
@@ -326,6 +357,33 @@ namespace FacialRecognition.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("FacialRecognition.Data.Models.Course", b =>
+                {
+                    b.HasOne("FacialRecognition.Data.Models.Department", "Department")
+                        .WithMany("Courses")
+                        .HasForeignKey("DepartmentID");
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("FacialRecognition.Data.Models.Lecturer", b =>
+                {
+                    b.HasOne("FacialRecognition.Data.Models.Department", "Department")
+                        .WithMany("Lecturers")
+                        .HasForeignKey("DepartmentID");
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("FacialRecognition.Data.Models.Student", b =>
+                {
+                    b.HasOne("FacialRecognition.Data.Models.Department", "Department")
+                        .WithMany("Students")
+                        .HasForeignKey("DepartmentID");
+
+                    b.Navigation("Department");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -375,6 +433,15 @@ namespace FacialRecognition.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FacialRecognition.Data.Models.Department", b =>
+                {
+                    b.Navigation("Courses");
+
+                    b.Navigation("Lecturers");
+
+                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

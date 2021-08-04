@@ -221,7 +221,6 @@
         <!-- Scrollbar JS-->
         <script src="~/assets/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
         <script src="~/assets/plugins/jquery.nicescroll/jquery.nicescroll.min.js"></script>
-
         <!--classic JS-->
         <script src="~/assets/plugins/classie/classie.js"></script>
 
@@ -238,10 +237,6 @@
         <!-- Echart js -->
         <script src="~/assets/plugins/charts/echarts/js/echarts-all.js"></script>
 
-        <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="https://code.highcharts.com/modules/exporting.js"></script>
-        <script src="https://code.highcharts.com/highcharts-3d.js"></script>
-
         <!-- custom js -->
         <script type="text/javascript" src="~/assets/js/main.min.js"></script>
         <script type="text/javascript" src="~/assets/pages/dashboard.js"></script>
@@ -251,6 +246,7 @@
         <script src="~/lib/datatables.net/jquery.dataTables.min.js"></script>
         <script src="~/lib/datatables.net-bs5/dataTables.bootstrap5.min.js"></script>
         <script>
+            var table;
             var $window = $(window);
             var nav = $('.fixed-button');
             $window.scroll(function () {
@@ -262,16 +258,42 @@
                 }
             });
             $(document).ready(function () {
-                $('#example').DataTable({
+                table = $('#example').DataTable({
                     "bLengthChange": false,
+                    "language": {
+                        "emptyTable": "Please select a course"
+                    },
+                    "columnDefs": [{
+                        "targets": 0,
+                        "visible": false,
+                        "searchable": false
+                    }],
+                    "columnDefs": [{
+                        "targets": 5,
+                        "data": null,
+                        "defaultContent": `<button class="btn btn-primary btn-sm rounded-0" type="button" ><i class="icofont icofont-finger-print"></i> Authenticate </button>`
+                    }],
+                    "columns": [
+                        { "data": "$id" },
+                        { "data": "regNo" },
+                        { "data": "firstName" },
+                        { "data": "lastName" },
+                        { "data": "department" },
+                    ],
                 });
                 $('.js-example-basic').select2({
                     placeholder: 'Select a Course'
                 }).on("change", function () {
                     var courseCode = $(this).val();
-                    $.getJSON(`?handler=GetCourseStudents&courseCode=${courseCode}`);
+                    $.getJSON(`?handler=GetCourseStudents&courseCode=${courseCode}`).done(function (result) {
+                        console.log(typeof result);
+                        //result = JSON.parse(result);
+                        table.clear();
+                        table.rows.add(result).draw();
+                    });;
                 });
                 $(".js-example-tags").select2({
+                    dropdownParent: $('#exampleModalCenter'),
                     tags: true,
                     placeholder: "Select a Course",
                     width: "570px"
@@ -304,7 +326,34 @@
                 })
             });
         </script>
+        <script>
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
 
+                    reader.onload = function (e) {
+                        $('#imageResult')
+                            .attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $(function () {
+                $('#file').on('change', function () {
+                    readURL(input);
+                });
+            });
+            var input = document.getElementById('file');
+            var infoArea = document.getElementById('upload-label');
+
+            input.addEventListener('change', showFileName);
+            function showFileName(event) {
+                var input = event.srcElement;
+                var fileName = input.files[0].name;
+                infoArea.textContent = 'File name: ' + fileName;
+            }
+        </script>
 
         @await RenderSectionAsync("Scripts", required: false)
     </div>

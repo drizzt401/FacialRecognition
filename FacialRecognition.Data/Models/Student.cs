@@ -12,5 +12,7 @@ namespace FacialRecognition.Data.Models
         [Key]
         public string RegistrationNumber { get; set; }
         public ICollection<Course> Courses { get; set; }
+        public Department Department { get; set; }
+        public byte[] StudentImage { get; set; }
     }
 }
