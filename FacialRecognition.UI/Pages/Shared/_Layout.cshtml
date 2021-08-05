@@ -245,6 +245,7 @@
         <script src="~/css/select2/js/select2.min.js"></script>
         <script src="~/lib/datatables.net/jquery.dataTables.min.js"></script>
         <script src="~/lib/datatables.net-bs5/dataTables.bootstrap5.min.js"></script>
+        <script src="~/webcamjs-master/webcam.js"></script>
         <script>
             var table;
             var $window = $(window);
@@ -271,7 +272,7 @@
                     "columnDefs": [{
                         "targets": 5,
                         "data": null,
-                        "defaultContent": `<button class="btn btn-primary btn-sm rounded-0" type="button" ><i class="icofont icofont-finger-print"></i> Authenticate </button>`
+                        "defaultContent": `<button class="btn btn-primary btn-sm rounded-0" data-toggle="modal" data-target="#authModal" type="button" ><i class="icofont icofont-finger-print"></i> Authenticate </button>`
                     }],
                     "columns": [
                         { "data": "$id" },
@@ -326,35 +327,6 @@
                 })
             });
         </script>
-        <script>
-            function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        $('#imageResult')
-                            .attr('src', e.target.result);
-                    };
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-
-            $(function () {
-                $('#file').on('change', function () {
-                    readURL(input);
-                });
-            });
-            var input = document.getElementById('file');
-            var infoArea = document.getElementById('upload-label');
-
-            input.addEventListener('change', showFileName);
-            function showFileName(event) {
-                var input = event.srcElement;
-                var fileName = input.files[0].name;
-                infoArea.textContent = 'File name: ' + fileName;
-            }
-        </script>
-
         @await RenderSectionAsync("Scripts", required: false)
     </div>
     <!--<nav class="navbar navbar-expand-lg py-2 navbar-dark bg-dark shadow-sm">

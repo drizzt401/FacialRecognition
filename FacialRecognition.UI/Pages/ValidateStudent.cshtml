@@ -6,11 +6,11 @@
 <div class="row">
     <form method="post">
         <div class="container-fluid">
-            <div >
+            <div>
                 <div class="main-header">
                     <h6 class="card-header-text">Courses</h6>
-                        <select asp-items="Model.CourseOptions" class="js-example-basic">
-                        </select>
+                    <select asp-items="Model.CourseOptions" class="js-example-basic">
+                    </select>
                 </div>
                 <div class="card-block">
                     <div class="row py-5">
@@ -39,6 +39,72 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title col-md-9" id="authModalLongTitle"> Student Verification </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading bg-default txt-white">
+                                            Camera
+                                        </div>
+                                        <div class="panel-body">
+                                            <div id="my_camera"></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <input type="button" class="btn btn-success" value="Take Snapshot" onClick="take_snapshot()">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
+    @section Scripts {
+
+        <script language="JavaScript">
+            Webcam.set({
+                width: 249,
+                height: 240,
+                image_format: 'jpeg',
+                jpeg_quality: 90
+            });
+            Webcam.attach('#my_camera');
+        </script>
+        <!-- Code to handle taking the snapshot and displaying it locally -->
+        <script language="JavaScript">
+            function take_snapshot() {
+                // take snapshot and get image data
+                Webcam.snap(function (data_uri) {
+                    // display results in page
+                    document.getElementById('results').innerHTML =
+                        '<img src="' +
+                        data_uri +
+                        '"/>';
+
+                    Webcam.upload(data_uri,
+                        '/Camera/Capture',
+                        function (code, text) {
+                            alert('Photo Captured');
+                        });
+
+                });
+            }
+        </script>
+    }
 </div>
