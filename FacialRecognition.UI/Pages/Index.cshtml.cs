@@ -14,7 +14,6 @@ namespace FacialRecognition.UI.Pages
     public class IndexModel : PageModel
     {
         private readonly IFacialRecognitionService facialRecognitionService;
-        private readonly SignInManager<AppUser> signInManager;
         private readonly UserManager<AppUser> userManager;
         private Lecturer lecturer;
         private Student student;

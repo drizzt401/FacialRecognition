@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System.Text;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.Extensions.FileProviders;
 
 namespace FacialRecognition.UI.Pages
 {
@@ -56,6 +59,36 @@ namespace FacialRecognition.UI.Pages
             var res = JsonConvert.DeserializeObject<Datum[]>(str);
             response.data = res;
             return  new JsonResult(response.data); 
+        }
+
+        public async Task OnPostUploadImage([FromForm] IFormFile picture)
+        {
+            if (picture != null)
+            {
+                if (picture.Length > 0)
+                {
+                    //Getting FileName
+                    var fileName = Path.GetFileName(picture.FileName);
+
+                    //Assigning Unique Filename (Guid)
+                    var myUniqueFileName = Convert.ToString(Guid.NewGuid());
+
+                    //Getting file Extension
+                    var fileExtension =".jpeg";
+
+                    // concatenating  FileName + FileExtension
+                    var newFileName = String.Concat(myUniqueFileName, fileExtension);
+
+                    // Combines two strings into a path.
+                    var filepath = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img")).Root + $@"\{newFileName}";
+
+                    using (FileStream fs = System.IO.File.Create(filepath))
+                    {
+                        picture.CopyTo(fs);
+                        fs.Flush();
+                    }
+                }
+            }
         }
     }
 }
