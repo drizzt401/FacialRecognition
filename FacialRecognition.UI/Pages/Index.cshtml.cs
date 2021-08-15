@@ -24,7 +24,7 @@ namespace FacialRecognition.UI.Pages
             userManager = _userManager;
         }
 
-        //public string imageData { get; set; }
+        public string imageData { get; set; }
 
         [BindProperty]
         public InputModel Input { get; set; } = new InputModel();
@@ -58,8 +58,8 @@ namespace FacialRecognition.UI.Pages
                 student = facialRecognitionService.GetStudents().Where(s => s.RegistrationNumber == user.Id).FirstOrDefault();
                 department = student.Department;
                 Input.Courses = facialRecognitionService.GetCoursesByStudent(user.Id);
-               // var imgPath = student.StudentImage;
-               // imageData = @"data:image / jpeg; base64," + Convert.ToBase64String(imgPath);
+                //var imgPath = student.StudentImage;
+                //imageData = @"data:image/jpeg;base64,"+Convert.ToBase64String(imgPath);
                 Input.CourseOptions = facialRecognitionService.GetCourses().Select(a => new SelectListItem
                 {
                     Value = a.CourseCode.ToString(),

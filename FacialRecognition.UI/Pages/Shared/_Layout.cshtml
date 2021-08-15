@@ -27,12 +27,6 @@
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="~/assets/plugins/bootstrap/css/bootstrap.min.css">
 
-    <!-- Chartlist chart css -->
-    <link rel="stylesheet" href="~/assets/plugins/chartist/dist/chartist.css" type="text/css" media="all">
-
-    <!-- Weather css -->
-    <link href="~/assets/css/svg-weather.css" rel="stylesheet">
-
 
 
     <!-- Style.css -->
@@ -250,6 +244,7 @@
             var table;
             var $window = $(window);
             var nav = $('.fixed-button');
+            var rowData;
             $window.scroll(function () {
                 if ($window.scrollTop() >= 200) {
                     nav.addClass('active');
@@ -272,7 +267,7 @@
                     "columnDefs": [{
                         "targets": 5,
                         "data": null,
-                        "defaultContent": `<button class="btn btn-primary btn-sm rounded-0" data-toggle="modal" data-target="#authModal" type="button" ><i class="icofont icofont-finger-print"></i> Authenticate </button>`
+                        "defaultContent": `<button id="getRowData" class="btn btn-primary btn-sm rounded-0" data-toggle="modal" data-target="#authModal" type="button" ><i class="icofont icofont-finger-print"></i> Authenticate </button>`
                     }],
                     "columns": [
                         { "data": "$id" },
@@ -287,7 +282,6 @@
                 }).on("change", function () {
                     var courseCode = $(this).val();
                     $.getJSON(`?handler=GetCourseStudents&courseCode=${courseCode}`).done(function (result) {
-                        console.log(typeof result);
                         //result = JSON.parse(result);
                         table.clear();
                         table.rows.add(result).draw();
@@ -319,6 +313,41 @@
                     $container.html('').append($list);
                 }).trigger('change');
 
+                $("#authModal").on('shown.bs.modal', function (event) {
+                    var button = event.relatedTarget
+                    rowData = table.row($(button).parents('tr')).data();
+                })
+                $("#takeSnapshot").click(function () {
+
+                    var formData = new FormData();
+                    var postData;
+                    // take snapshot and get image data
+                    Webcam.snap(function (data_uri) {
+                        // display results in page
+                        document.getElementById('results').innerHTML =
+                            '<img id = "studentImage" src="' +
+                            data_uri +
+                            '"/>';
+                        var base64 = getBase64Image(data_uri);
+                        console.log(base64)
+                        postData = {
+                            'picture': base64,
+                            'studentId': rowData.regNo
+                        };
+                        console.log("Postdata:" + postData);
+                    });
+
+                    $.ajax({
+                        type: "POST",
+                        headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                        url: '/ValidateStudent?handler=UploadImage',
+                        data: postData,
+                        dataType: "json"
+                    }).done(function (data) {
+                        console.log(data);
+                        document.getElementById('recognitionResult').innerHTML = data;
+;                    });
+                })
             });
             $(function () {
                 $('.sidebar-menu li a').filter(function () { return this.href == location.href }).parent().addClass('active').siblings().removeClass('active')
@@ -326,6 +355,29 @@
                     $(this).parent().addClass('active').siblings().removeClass('active')
                 })
             });
+            function getBase64Image(img) {
+                var dataURL = img;
+                return dataURL.replace(/^data:image\/(png|jpeg);base64,/, "");
+            }
+            //function dataURItoBlob(dataURI) {
+            //    // convert base64/URLEncoded data component to raw binary data held in a string
+            //    var byteString;
+            //    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+            //        byteString = atob(dataURI.split(',')[1]);
+            //    else
+            //        byteString = unescape(dataURI.split(',')[1]);
+
+            //    // separate out the mime component
+            //    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+            //    // write the bytes of the string to a typed array
+            //    var ia = new Uint8Array(byteString.length);
+            //    for (var i = 0; i < byteString.length; i++) {
+            //        ia[i] = byteString.charCodeAt(i);
+            //    }
+
+            //    return new Blob([ia], { type: mimeString });
+            //}
         </script>
         @await RenderSectionAsync("Scripts", required: false)
     </div>

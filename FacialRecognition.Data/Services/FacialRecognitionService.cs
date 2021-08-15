@@ -138,5 +138,10 @@ namespace FacialRecognition.Data.Services
                 throw;
             }
         }
+
+        public byte[] GetStudentImage(string studentId)
+        {
+            return _context.Students.Where(s => s.RegistrationNumber == studentId).FirstOrDefault().StudentImage;
+        }
     }
 }

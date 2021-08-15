@@ -49,7 +49,9 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-
+                                <div id="recognitionResult" class="alert alert-primary" role="alert">
+                                    
+                                </div>
                                 <div class="col-md-6 col-sm-6">
                                     <div class="panel panel-default">
                                         <div class="panel-heading bg-default txt-white">
@@ -59,7 +61,7 @@
                                             <div id="my_camera"></div>
                                         </div>
                                         <div class="panel-footer">
-                                            <input type="button" class="btn btn-success" value="Take Snapshot" onClick="take_snapshot()">
+                                            <input type="button" id="takeSnapshot" class="btn btn-success" value="Take Snapshot">
                                         </div>
                                     </div>
                                 </div>
@@ -76,7 +78,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-primary">Add</button>
+                            <button id="verify" class="btn btn-primary">VERIFY</button>
                         </div>
                     </div>
                 </div>
@@ -96,52 +98,7 @@
         </script>
         <!-- Code to handle taking the snapshot and displaying it locally -->
         <script language="JavaScript">
-            function take_snapshot() {
-                var formData = new FormData();
-                // take snapshot and get image data
-                Webcam.snap(function (data_uri) {
-                    // display results in page
-                    document.getElementById('results').innerHTML =
-                        '<img src="' +
-                        data_uri +
-                        '"/>';
-                    var blob = dataURItoBlob(data_uri);
-                    console.log(blob);
-                    formData.append('picture', blob);
 
-                });
-                $.ajax({
-                    type: "POST",
-                    headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
-                    url: '/ValidateStudent?handler=UploadImage',
-                    cache: false,
-                    processData: false,
-                    contentType: false,
-                    data: formData,
-                }).done(function (data) {
-
-                    console.log($('input:hidden[name="__RequestVerificationToken"]').val());
-                });
-            }
-            function dataURItoBlob(dataURI) {
-                // convert base64/URLEncoded data component to raw binary data held in a string
-                var byteString;
-                if (dataURI.split(',')[0].indexOf('base64') >= 0)
-                    byteString = atob(dataURI.split(',')[1]);
-                else
-                    byteString = unescape(dataURI.split(',')[1]);
-
-                // separate out the mime component
-                var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
-                // write the bytes of the string to a typed array
-                var ia = new Uint8Array(byteString.length);
-                for (var i = 0; i < byteString.length; i++) {
-                    ia[i] = byteString.charCodeAt(i);
-                }
-
-                return new Blob([ia], { type: mimeString });
-            }
         </script>
     }
 </div>
