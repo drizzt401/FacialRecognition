@@ -9,10 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
-using System.Text;
-using Microsoft.AspNetCore.Http;
 using System.IO;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Azure.CognitiveServices.Vision.Face;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Microsoft.Extensions.Configuration;
@@ -117,7 +114,7 @@ namespace FacialRecognition.UI.Pages
                         {
                             res = "This student has been registered for this course";
                         }
-                        else res = "This student has not been registered for this course";
+                        else res = "The image does not match our records in the database";
                     }
                 }
 

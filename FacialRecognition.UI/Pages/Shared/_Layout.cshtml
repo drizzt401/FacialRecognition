@@ -45,12 +45,14 @@
     <div class="wrapper">
 
         <header class="main-header-top hidden-print">
-            <a href="#" class="logo"><img class="img-fluid able-logo" src=""></a>
+            <a href="#" class="logo">
+                <img class="img-fluid able-logo" src="~/img/logoipsum-logo-29.svg">
+            </a>
             <nav class="navbar navbar-static-top">
                 <!-- Sidebar toggle button-->
                 <a href="#!" data-toggle="offcanvas" class="sidebar-toggle"></a>
                 <!-- Navbar Right Menu-->
-                <div class="navbar-custom-menu f-right">
+                <div class="navbar-custom-menu f-right m-t-15">
 
                     <ul class="top-nav">
                         <partial name="_LoginPartial" />
@@ -254,6 +256,7 @@
                 }
             });
             $(document).ready(function () {
+                $('#recognitionResult').hide();
                 table = $('#example').DataTable({
                     "bLengthChange": false,
                     "language": {
@@ -345,7 +348,10 @@
                         dataType: "json"
                     }).done(function (data) {
                         console.log(data);
-                        document.getElementById('recognitionResult').innerHTML = data;
+                        document.getElementById('recognitionResult').innerHTML = data + `<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span >
+                                    </button >`;
+                        $('#recognitionResult').show();
 ;                    });
                 })
             });

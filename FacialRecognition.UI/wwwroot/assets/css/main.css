@@ -48,6 +48,22 @@ body {
   * a:focus, * a:hover {
     text-decoration: none; }
 
+ul .dropdown span {
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 400;
+    cursor: pointer;
+    -webkit-transition: all 0.3s 0s;
+    -moz-transition: all 0.3s 0s;
+    -ms-transition: all 0.3s 0s;
+    transition: all 0.3s 0s;
+}
+
+    ul .dropdown a:focus, ul .dropdown a:hover {
+        text-decoration: none;
+        opacity: 0.7 !important;
+    }
+
 *:focus {
   outline: none !important; }
 
@@ -6359,13 +6375,12 @@ svg#sun {
                     background: #f1f1f1;
                     border-color: #d6d6d6;
                 }
-
                 .avatar-upload .avatar-edit input + label:after {
-                    content: "\f040";
-                    font-family: "FontAwesome";
+                    content: "\efa2";
+                    font-family: "Icofont";
                     color: #757575;
                     position: absolute;
-                    top: 10px;
+                    top: 8px;
                     left: 0;
                     right: 0;
                     text-align: center;

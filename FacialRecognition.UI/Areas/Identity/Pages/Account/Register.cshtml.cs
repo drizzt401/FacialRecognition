@@ -96,6 +96,8 @@ namespace FacialRecognition.UI.Areas.Identity.Pages.Account
                         Department department = _recognitionService.GetDepartments().Where(d => d.DepartmentID == Department).SingleOrDefault();
                         await _recognitionService.AddLecturer(new Lecturer { FirstName = Input.FirstName, LastName = Input.LastName, StaffID = Input.ID, Department = department });
                         await _userManager.AddToRoleAsync(user, Roles.Lecturer.ToString());
+                        await _userManager.UpdateAsync(user);
+                        await _signInManager.SignInAsync(user, false);
                     }
                     else
                     {
@@ -120,6 +122,7 @@ namespace FacialRecognition.UI.Areas.Identity.Pages.Account
                         await _recognitionService.AddStudent(new Student { FirstName = Input.FirstName, LastName = Input.LastName, RegistrationNumber = Input.ID, Department = department, StudentImage= image});
                         await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
                         await _userManager.UpdateAsync(user);
+                        await _signInManager.SignInAsync(user, false);
                     }
 
                     returnUrl = "~/Index";

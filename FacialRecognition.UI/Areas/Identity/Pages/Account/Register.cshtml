@@ -171,7 +171,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Quantum Able Bootstrap 4 Admin Dashboard Template</title>
 
     <!-- HTML5 Shim and Respond.js IE9 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -188,9 +187,6 @@
           content=", Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
     <meta name="author" content="codedthemes">
 
-    <!-- Favicon icon -->
-    <link rel="shortcut icon" href="~/assets/images/favicon.png" type="image/x-icon">
-    <link rel="icon" href="~/assets/images/favicon.ico" type="image/x-icon">
 
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500,700" rel="stylesheet">
@@ -218,12 +214,13 @@
                 <div class="col-sm-12">
                     <div class="login-card card-block bg-white">
                         <form enctype="multipart/form-data" class="md-float-material" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                            <div asp-validation-summary="All" class="alert-danger"></div>
+                            <div asp-validation-summary="All" class="text-danger"></div>
                             <h3 class="text-center txt-primary">Create an account </h3>
                             <div class="avatar-upload">
                                 <div class="avatar-edit">
                                     <input type="file" asp-for="Input.Image" id="imageUpload" accept=".png, .jpg, .jpeg" />
-                                    <label asp-for="Input.Image" for="imageUpload"></label>
+                                    <label for="imageUpload"></label>
+                                    <span asp-validation-for="Input.Image" class="text-danger"></span>
                                 </div>
                                 <div class="avatar-preview">
                                     <div id="imagePreview" style="background-image: url(http://i.pravatar.cc/500?img=7);">
@@ -231,20 +228,23 @@
                                 </div>
                             </div>
                             <div class="md-input-wrapper">
-                                <input asp-for="Input.ID" type="text" class="md-form-control" required="required">
+                                <input asp-for="Input.ID" type="text" class="md-form-control" data-val="true" data-val-required="Please input an ID Number">
                                 <label id="userID">ID</label>
+                                <span asp-validation-for="Input.ID" class="text-danger"></span>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="md-input-wrapper">
-                                        <input asp-for="Input.FirstName" type="text" class="md-form-control" required="">
+                                        <input asp-for="Input.FirstName" type="text" class="md-form-control" data-val="true" data-val-required="This field is required">
                                         <label>First Name</label>
+                                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="md-input-wrapper">
-                                        <input asp-for="Input.LastName" type="text" class="md-form-control" required="">
+                                        <input asp-for="Input.LastName" type="text" class="md-form-control" data-val="true" data-val-required="This field is required">
                                         <label>Last Name</label>
+                                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -252,9 +252,10 @@
                                 <div class="col-md-6">
                                     <div id="department" class="form-group">
                                         <label id="userID">Department</label>
-                                        <select asp-for="Input.Department" name="Department" asp-items="Model.Departments" required class="form-control">
+                                        <select asp-for="Input.Department" name="Department" asp-items="Model.Departments" data-val="true" data-val-required="Please select a Department" class="form-control">
                                             <option>---Select a Department---</option>
                                         </select>
+                                        <span asp-validation-for="Input.Department" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -283,13 +284,14 @@
                                 </div>
                             </div>
                             <div class="md-input-wrapper">
-                                <input asp-for="Input.Password" data-toggle="password" type="password" class="md-form-control" required="required">
+                                <input asp-for="Input.Password" data-toggle="password" type="password" class="md-form-control" data-val="true" data-val-required="Please input a password">
                                 <label>Password</label>
                                 <div class="input-group-append">
                                     <span class="input-group-text">
                                         <i class="fas fa-eye"></i>
                                     </span>
                                 </div>
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
 
                             </div>
                             <div class="col-xs-10 offset-xs-1">
@@ -300,7 +302,7 @@
                             <div class="row">
                                 <div class="col-xs-12 text-center">
                                     <span class="text-muted">Already have an account?</span>
-                                    <a href="login1.html" class="f-w-600 p-l-5"> Sign In Here</a>
+                                    <a asp-area="Identity" asp-page="/Account/Login" class="f-w-600 p-l-5"> Sign In Here</a>
 
                                 </div>
                             </div>
@@ -362,6 +364,8 @@
     <!-- Warning Section Ends -->
     <!-- Required Jqurey -->
     <script src="~/assets/plugins/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="~/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="~/assets/plugins/tether/dist/js/tether.min.js"></script>
 
@@ -370,7 +374,7 @@
 
     <!--text js-->
     <script type="text/javascript" src="~/assets/pages/elements.js"></script>
-    <script> 
+    <script>
         $(document).ready(function () {
             $('[name="Input.isLecturer"]').on('change', (function () {
                 if ($(this).attr('id') == 'isLecturer') {
